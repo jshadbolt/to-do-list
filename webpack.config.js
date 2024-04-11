@@ -5,15 +5,12 @@ module.exports = {
 
     //                                                  set export mode
     // mode: 'production',
-    //for disk build: ~terminal: webpack 
     mode: 'development',
-
-    // enable Watch Mode (auto refresh changes), 
-    watch: true, // see: https://webpack.js.org/guides/development/#using-watch-mode
 
     entry: { //                                         entry: place to begin generating webpage from
         index: './src/index.js',
     },
+
     plugins: [
         new HtmlWebpackPlugin({
             //                                          webpage title here
@@ -31,7 +28,7 @@ module.exports = {
     // see: https://webpack.js.org/guides/development/#using-webpack-dev-server
     devServer: {
         static: './dist',
-        watchFiles: ['src/*.html'],
+        watchFiles: ['src/*.html', 'src/*.js'],
     },
 
     module: {
@@ -58,13 +55,9 @@ module.exports = {
         ],
     },
     output: {
-        filename: '.bundle.js',
+        filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist'),
         clean: true,
-    },
-    // build time optimization, see https://webpack.js.org/guides/development/#using-webpack-dev-server 
-    optimization: {
-        runtimeChunk: 'single',
-    },
+    }
 };
 

@@ -1,4 +1,5 @@
-import './style.css';
+import loadApp from './javascript/internal/loadApp'
 
-console.log('hello world')
 
+
+loadApp()
