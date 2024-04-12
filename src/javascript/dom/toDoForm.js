@@ -23,42 +23,29 @@ function toDoForm(target) {
                 type: 'checkbox'
             },
             parentTopic: {
-                label: 'Parent topic',
+                label: 'Choose topic',
                 element: () => {
-                    return createSelect(avaliableChoices, 'avaliable-topics')
-                },
+                    return createSelect(avaliableChoices, 'avaliable-topics');
+                }
             },
+            button: {
+                type: 'button',
+                value: 'Button',
+                listener: {
+                    type: 'click',
+                    handler: () => {
+                        console.log('Button clicked');
+                    }
+                }
+            }
         }
-    }
+    };
 
     let toDoForm = createForm(formStructure)
     target.appendChild(toDoForm)
 
 
 
-
-
-    // let availableTopics = Object.keys(topics);
-
-    // const container = createEl('.create-form.todo');
-
-    // const toDoForm = createEl('form');
-    // toDoForm.addEventListener('submit', (e) => e.preventDefault())
-
-    // const nameLabel = createEl('label[for="name"]');
-    // nameLabel.textContent = 'name';
-    // const nameField = createEl('input#name[type="text"]');
-    // const descriptionLabel = createEl('label[for="description"]');
-    // descriptionLabel.textContent = 'Description';
-    // const descriptionField = createEl('input#description[type="text"]');
-
-    // const checklistLabel = createEl('label[for="checklist"]');
-    // checklistLabel.textContent = 'Checklist';
-    // const checklistField = createEl('input#checklist[type="checkbox"]');
-
-    // const parentTopicLabel = createEl('label[for="parentTopic"]');
-    // parentTopicLabel.textContent = 'Choose Topic';
-    // const parentTopicSelect = createSelect(availableTopics, 'avaliable-topics');
 
     // const createBtn = createEl('button.create-button')
     // createBtn.textContent = 'Create Todo'

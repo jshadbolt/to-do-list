@@ -1,5 +1,4 @@
 import createEl from "./createEl";
-
 function createForm(formOptions) {
     // Extract form name and fields from the formOptions object
     const formName = Object.keys(formOptions)[0];
@@ -13,6 +12,13 @@ function createForm(formOptions) {
         if (fields.hasOwnProperty(key)) {
             const option = fields[key];
 
+            // Check if needed and Create label element
+            if (option.label !== undefined && option.label !== null) {
+                const label = createEl(`label[for='${key}Input']`);
+                label.textContent = option.label || key;
+                form.appendChild(label);
+            }
+
             // Check if the field is 'element'
             if (option.element !== undefined && option.element !== null) {
                 // Append custom element if specified
@@ -23,16 +29,17 @@ function createForm(formOptions) {
                     console.error(`Invalid 'element' property for field '${key}'. It must be a function.`);
                 }
             } else {
-                // Create label element
-                const label = createEl(`label[for='${key}Input']`);
-                label.textContent = option.label || key 
-                form.appendChild(label);
-
                 // Create input element based on the specified type
                 const inputType = option.type || 'text';
                 const input = createEl(`input#${key}Input[type='${inputType}']`);
-                input.placeholder = option.placeholder || '' 
-                input.value = option.value || ''
+                input.placeholder = option.placeholder || '';
+                input.value = option.value || '';
+
+                // Attach event listener if specified
+                if (option.listener !== undefined && option.listener !== null) {
+                    input.addEventListener(option.listener.type, option.listener.handler);
+                }
+
                 form.appendChild(input);
             }
 
