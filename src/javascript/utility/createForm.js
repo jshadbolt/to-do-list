@@ -51,24 +51,26 @@ export default createForm;
 
 
 // const formStructure = {
-//     toDoForm: {
-//         name: {
+//     formName: {
+//         field1Name: {
 //             label: 'Name',
 //             placeholder: 'Enter title',
 //             type: 'text'
 //         },
-//         description: {
+//         field1Name: {
 //             label: 'Description',
 //             placeholder: 'Enter description',
 //             type: 'text'
 //         },
-//         checkbox: {
+//         field2Name: {
 //             label: 'Checkbox',
 //             type: 'checkbox'
 //         },
-//         parentTopic: {
-//             label: 'Parent topic',
-//             element: functionThatReturnsAnElement(),
+//         field3Name: {
+//             label: 'Topic',
+//             element: () => {
+//                 return functionThatReturnsAnElement()
+//             },
 //         }
 //     }
 // }

@@ -2,12 +2,9 @@ import { topics } from '../internal/storage'
 import createSelect from "./createSelect";
 import createForm from '../utility/createForm';
 
-
-
-
 function toDoForm(target) {
 
-    let topicChoices = Object.keys(topics)
+    let avaliableChoices = Object.keys(topics)
 
     const formStructure = {
         toDoForm: {
@@ -25,13 +22,12 @@ function toDoForm(target) {
                 label: 'Checkbox',
                 type: 'checkbox'
             },
-            // parentTopic: {
-            //     label: 'Parent topic',
-            //     element: () => {
-            //         // createSelect(topicChoices, 'choice-topics')
-            //         console.log('element used')
-            //     },
-            // }
+            parentTopic: {
+                label: 'Parent topic',
+                element: () => {
+                    return createSelect(avaliableChoices, 'avaliable-topics')
+                },
+            },
         }
     }
 
