@@ -1,32 +1,46 @@
 import createEl from "../utility/createEl";
+import attachEl from "../utility/attachEl";
 import createSelect from "./createSelect";
 import submitForm from "../utility/submitForm"
 import { topics } from '../internal/storage'
+
+import createCheckList from "./createCheckList";
+
 
 import ToDo from "../constructors/ToDo";
 
 
 
-function toDoPopup(target) {
+
+function toDoForm(target) {
+
+    // make a function to return these dom elements as one object so you can add event listeners whereeeded
 
     let availableTopics = Object.keys(topics);
 
-    const container = createEl('div.create-new.todo');
+    const container = createEl('.create-form.todo');
 
     const toDoForm = createEl('form');
+    toDoForm.addEventListener('submit', (e) => e.preventDefault())
 
     const nameLabel = createEl('label[for="name"]');
     nameLabel.textContent = 'name';
     const nameField = createEl('input#name[type="text"]');
-
     const descriptionLabel = createEl('label[for="description"]');
     descriptionLabel.textContent = 'Description';
     const descriptionField = createEl('input#description[type="text"]');
 
-    // Uncomment to include the checklist elements
-    // const checklistLabel = createEl('label[for="checklist"]');
-    // checklistLabel.textContent = 'Checklist';
-    // const checklistField = createEl('input#checklist[type="text"]');
+
+    const checklistLabel = createEl('label[for="checklist"]');
+    checklistLabel.textContent = 'Checklist';
+    const checklistField = createEl('input#checklist[type="checkbox"]');
+    checklistField.addEventListener('click', () => {
+
+        let newCheckList = createCheckList()
+        attachEl(newCheckList, parentTopicLabel, 'before')
+    })
+
+
 
     const parentTopicLabel = createEl('label[for="parentTopic"]');
     parentTopicLabel.textContent = 'Choose Topic';
@@ -35,6 +49,8 @@ function toDoPopup(target) {
     const createBtn = createEl('button.create-button')
     createBtn.textContent = 'Create Todo'
     createBtn.addEventListener('click', () => {
+
+        // make a handleCreateBtn function
 
         let fields = {
             name : nameField.value,
@@ -62,10 +78,12 @@ function toDoPopup(target) {
     toDoForm.append(
         nameLabel, nameField,
         descriptionLabel, descriptionField,
-        // checklistLabel, checklistField, // Uncomment to include the checklist elements
+        checklistLabel, checklistField, 
         parentTopicLabel, parentTopicSelect,
         createBtn
     );
+
+
 
     // Append the form to the container
     container.appendChild(toDoForm);
@@ -77,4 +95,4 @@ function toDoPopup(target) {
 
 }
 
-export default toDoPopup;
+export default toDoForm;

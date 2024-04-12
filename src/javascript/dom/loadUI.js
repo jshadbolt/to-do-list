@@ -1,5 +1,4 @@
-import createEl from "../utility/createEl"
-import toDoPopup from "./toDoPopup"
+import toDoForm from './toDoForm'
 
 function loadUI() {
     const content = document.querySelector('#content')
@@ -8,7 +7,7 @@ function loadUI() {
     let topicBtn = document.querySelector('.topic-button')
 
     toDoBtn.addEventListener('click', () => {
-        toDoPopup(content)
+        toDoForm(content)
     })
 }
 
