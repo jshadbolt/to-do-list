@@ -1,4 +1,4 @@
-import toDoForm from './toDoForm'
+import toDoForm from "./toDoForm"
 
 function loadUI() {
     const content = document.querySelector('#content')
@@ -12,3 +12,5 @@ function loadUI() {
 }
 
 export default loadUI;
+
+

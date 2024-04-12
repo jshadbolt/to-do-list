@@ -7,7 +7,7 @@ let createSelect = function(dataList, id) {
     dataList.forEach(value => {
         let opt = createEl('option');
         opt.value = value;
-        opt.textContent = value; // Use textContent to set the option text
+        opt.textContent = value;
         select.appendChild(opt);
     });
 
