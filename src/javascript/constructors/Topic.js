@@ -2,7 +2,7 @@ class Topic {
 
     constructor (name) {
         this.name = name
-        this.items = []
+        this.items = {}
     }
 
 }

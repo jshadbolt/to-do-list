@@ -1,4 +1,6 @@
-let topics = {};
+let storage = {
+    topics : {},
+}
 
-export { topics };
+export default storage;
 

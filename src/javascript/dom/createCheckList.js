@@ -1,36 +1,81 @@
 import createEl from "../utility/createEl"
-import isEnterKey from "../utility/callbackFns/isEnterKey"
-import {leadItemBtn} from "./btnHandlers/leadItemBtn"
 import attachEl from "../utility/attachEl"
+import isEnterKey from "../utility/callbackFns/isEnterKey"
 
 
-function createCheckList() {
+function createCheckList(checklistID) {
 
-    let container = createEl('.checklist-container')
+    let container = createEl(`div${checklistID}`)
     let list = createEl('ul.checklist')
-    let leadItem = createLeadItem(list)
+    let listItemLead = new ListItem_Lead(list).createSelf()
+
+    container.addEventListener('submit', (e) => {
+        e.preventDefault()
+    })
 
     container.appendChild(list)
-    list.appendChild(leadItem)
-
+    list.appendChild(listItemLead)
     return container
 }
 
-function createLeadItem(parent) {
-    let container = createEl('li.checklist-item#lead-item')
 
-    let bullet = createEl('input.checklist-bullet[type="checkbox"]')
-    let input = createEl('input.checklist-field[type="text"]')
+class ListItem {
+    constructor() {
 
-    input.addEventListener('keyup', function(event) {
-        if (isEnterKey(event)) {
-            let fields = { bullet , input }
-            attachEl(leadItemBtn(parent, fields) , container,  'before')
-        }
-    });
+    }
+    create() {
+        let container = createEl('li.item-cont')
+        let bullet = createEl('input.item-bullet[type="checkbox"]')
+        let input = createEl('input.item-field[type="text"]')
+        container.append(bullet, input)
 
-    container.append(bullet, input)
-    return container
+        return container
+    }
 }
+
+
+class ListItem_Lead extends ListItem {
+    
+    constructor(parent) {
+        super(); // Call the constructor of the parent class
+        this._parent = parent;
+    }
+
+    createSelf() {
+        let self = super.create();
+        let bullet = self.querySelector('input[type="checkbox"]');
+        let input = self.querySelector('input[type="text"]');
+        self.id = 'list_lead'
+
+        input.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') {
+                let bulletValue = bullet.checked;
+                let inputValue = input.value;
+                let newItem = this.createNew(bulletValue, inputValue);
+                this._parent.insertBefore(newItem, e.target.parentNode);
+
+                // reset leadItem
+                bullet.checked = false
+                input.value = ''
+            }
+        });
+
+
+        return self
+
+    }
+
+    createNew(bulletValue, inputValue) {
+        let newItem = super.create();
+        let bullet = newItem.querySelector('input[type="checkbox"]');
+        let input = newItem.querySelector('input[type="text"]');
+
+        bullet.checked = bulletValue; // Set checkbox state
+        input.value = inputValue; // Set input value
+
+        return newItem;
+    }
+}
+
 
 export default createCheckList;

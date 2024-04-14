@@ -1,8 +1,8 @@
 import createEl from "../utility/createEl"
 
-let createSelect = function(dataList, id) {
+let createSelect = function(selectors, dataList) {
 
-    let select = createEl(`select#${id}`);
+    let select = createEl(`select${selectors}`);
 
     dataList.forEach(value => {
         let opt = createEl('option');

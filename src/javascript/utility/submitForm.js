@@ -1,7 +1,15 @@
-function submitForm(form, identifier, location) {
-    // submits form to an object structure, with an identifier
+function submitForm(form, formName, location, includedElements) {
+        
+        const include = includedElements.join(', ')
 
-    location[identifier] = form
+        let formFields = Array.from(form.querySelectorAll(include))
+        let formValues = formFields.reduce((accumulator, field) => {
+                // if (field.contains('form'))
+                accumulator[field.id] = field.value;
+                return accumulator;
+        }, {});
+
+        location[formName] = formValues
 
 }
 

@@ -10,10 +10,13 @@ function attachEl(source, target, position) {
             } else {
                 target.parentNode.appendChild(source)
             }
+            break; // Add this break statement
         }
         case 'append': {
             target.appendChild(source)
         }
+        break; // Add this break statement
+
     }
     // USAGE:
     // attach(table, div, 'before');

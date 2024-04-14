@@ -1,13 +1,13 @@
-import toDoForm from "./toDoForm"
+import form_todo from "./form_todo"
 
 function loadUI() {
     const content = document.querySelector('#content')
 
     let toDoBtn = document.querySelector('.to-do-button')
-    let topicBtn = document.querySelector('.topic-button')
+
 
     toDoBtn.addEventListener('click', () => {
-        toDoForm(content)
+        form_todo(content)
     })
 }
 
