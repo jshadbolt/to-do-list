@@ -1,6 +1,6 @@
-import loadContent from './javascript/internal/loadContent'
+import loadApp from './javascript/internal/loadApp'
 import style from './css/style.css'
 
 
 
-loadContent()
+loadApp()

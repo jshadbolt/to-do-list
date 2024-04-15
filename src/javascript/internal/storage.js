@@ -1,5 +1,7 @@
 let storage = {
-    topics : {},
+    projects : [],
+    todos: [],
+    notes: [],
 }
 
 export default storage;

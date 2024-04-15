@@ -1,6 +1,6 @@
-import createEl from "../utility/createEl"
+import createEl from "../../utility/createEl"
 
-let createSelect = function(selectors, dataList) {
+let element_select = function(selectors, dataList) {
 
     let select = createEl(`select${selectors}`);
 
@@ -15,5 +15,5 @@ let createSelect = function(selectors, dataList) {
 
 }
 
-export default createSelect;
+export default element_select;
 

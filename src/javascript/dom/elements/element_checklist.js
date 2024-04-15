@@ -1,9 +1,7 @@
-import createEl from "../utility/createEl"
-import attachEl from "../utility/attachEl"
-import isEnterKey from "../utility/callbackFns/isEnterKey"
+import createEl from "../../utility/createEl"
 
 
-function createCheckList(checklistID) {
+function element_checklist(checklistID) {
 
     let container = createEl(`div${checklistID}`)
     let list = createEl('ul.checklist')
@@ -45,16 +43,17 @@ class ListItem_Lead extends ListItem {
         let self = super.create();
         let bullet = self.querySelector('input[type="checkbox"]');
         let input = self.querySelector('input[type="text"]');
-        self.id = 'list_lead'
+        self.dataset.checklist_number = 0
 
         input.addEventListener('keyup', (e) => {
             if (e.key === 'Enter') {
                 let bulletValue = bullet.checked;
                 let inputValue = input.value;
                 let newItem = this.createNew(bulletValue, inputValue);
+                newItem.dataset.checklist_number = self.dataset.checklist_number++
                 this._parent.insertBefore(newItem, e.target.parentNode);
 
-                // reset leadItem
+                // reset checkbox and input of lead
                 bullet.checked = false
                 input.value = ''
             }
@@ -69,6 +68,8 @@ class ListItem_Lead extends ListItem {
         let newItem = super.create();
         let bullet = newItem.querySelector('input[type="checkbox"]');
         let input = newItem.querySelector('input[type="text"]');
+        newItem.dataset.checklist_number = '0'
+
 
         bullet.checked = bulletValue; // Set checkbox state
         input.value = inputValue; // Set input value
@@ -78,4 +79,4 @@ class ListItem_Lead extends ListItem {
 }
 
 
-export default createCheckList;
+export default element_checklist;
