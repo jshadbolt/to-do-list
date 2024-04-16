@@ -1,4 +1,4 @@
-import randomInt from "./randomNum"
+import randomInt from "./randomInt"
 
 
 function randomChar() {
