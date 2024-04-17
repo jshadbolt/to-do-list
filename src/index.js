@@ -50,12 +50,29 @@ class StorageManager {
         const index = this.isObjRef(obj) ? this.getObjRefIndex(obj, location) : this.getObjLitIndex(obj, location)
         return index  
     }
-    copyToArr(source, target) {
-        if (Array.isArray(source)) { //source is arr
-            source.forEach(element => {
-            target.push(element);
-        })} else { //source is obj
-            target.push(source)
+    getObjProps(obj, props) {
+        const objProps = {};
+        if (props === null) {
+            for (let prop in obj) {
+                objProps[prop] = obj[prop];
+            }
+        } else {
+            props.forEach(prop => {
+                if (obj.hasOwnProperty(prop)) {
+                    objProps[prop] = obj[prop];
+                }
+            });
+        }
+        return objProps;
+    }
+    addToObj(obj, location) {
+        location.obj = obj
+    }
+    addToArr(obj, location) {
+        if (Array.isArray(obj)) {
+            location.push(...obj)
+        } else {
+            location.push(obj)
         }
     }
     copyToObj(source, target) {
@@ -70,26 +87,42 @@ class StorageManager {
             }	
         }
     }
+    copyToArr(source, target) {
+        if (Array.isArray(source)) { //source is arr
+            source.forEach(element => {
+            target.push(element);
+        })} else { //source is obj
+            target.push(source)
+        }
+    }
+    editObj(target, source) {
+        Object.assign(target, source);
+        return target
+    }
     
 
     // user methods
-    add(obj, location) {
-        if (Array.isArray(obj)) {
-            location.push(...obj)
-        } else {
-            location.push(obj)
+    getEl(obj, location) {
+        return this.getObjRef(obj, location)
+    }
+    addEl(obj, location) {
+        if (Array.isArray(location)) { 
+            this.addToArr(obj, location)
+        } else if (typeof target === 'object') {
+            this.addToObj(obj, location)
         }
     }
-    remove(obj, location) {
-        const index = this.isObjRef(obj) ? this.getObjRefIndex(obj, location) : this.getObjLitIndex(obj, location)
+    removeEl(obj, location) {
+        // const index = this.isObjRef(obj) ? this.getObjRefIndex(obj, location) : this.getObjLitIndex(obj, location)
+        const index = this.getObjIndex(obj, location) //slower
         index !== -1 ? location.splice(index, 1) : console.log(`obj not found`)   
     }
-    edit(target, source) {
-        Object.assign(target, source);
+    editEl(target, source) {
+        this.editObj(target, source)
         return target
         //to edit object properties
     }
-    copy(source, target) {
+    copyEl(source, target) {
         if (Array.isArray(target)) { 
             this.copyToArr(source, target)
         } else if (typeof target === 'object') {
@@ -97,29 +130,32 @@ class StorageManager {
         }
         //to copy items
     }
+    getElProps(source, props) {
+        return this.getObjProps(source, props)
+    }
 
     // user actions
     addTp(obj) {
         let tp = new Tp(obj)
-        this.add(tp, this.storage.user.tps)
+        this.addEl(tp, this.storage.user.tps)
     }
     addTd(obj) {
         let td = new Td(obj)
-        this.add(td, this.storage.user.tds)
+        this.addEl(td, this.storage.user.tds)
     }
     removeTp(obj) {
         let location = this.storage.user.tps
         let index = this.getObjIndex(obj, location)
-        this.remove(index, location)
+        this.removeEl(index, location)
     }
     removeTd(obj) {
         let location = this.storage.user.tds
         let index = this.getObjIndex(obj, location)
-        this.remove(index, location)
+        this.removeEl(index, location)
     }
 
     // default actions
-    createDefaults() {
+    loadDefaults() {
         let tp1 = {name: 'Work'}
         let tp2 = {name: 'Gym'}
         let tp3 = {name: 'Personal'}
@@ -134,44 +170,42 @@ class StorageManager {
         this.add(defaultTds, this.storage.default.tds)
     }
     userAddDefaults() {
-        this.copy(this.storage.default.tps, this.storage.user.tps)
-        this.copy(this.storage.default.tds, this.storage.user.tds)
+        this.copyEl(this.storage.default.tps, this.storage.user.tps)
+        this.copyEl(this.storage.default.tds, this.storage.user.tds)
     }
+}
+
+// class add {
+//     constructor() {
+
+//     }
+//     tp(obj) {
+//         let tp = new Tp(obj)
+//         this.addEl(tp, this.storage.user.tps)
+//     }
+//     td(obj) {
+//         let td = new Td(obj)
+//         this.addEl(td, this.storage.user.tds)
+//     }
     
+// }
 
-}
+// class remove {
+//     constructor() {
+//         this
+//     }
 
-class add {
-    constructor() {
-        this
-    }
-    tp() {
-        let tp = new Tp(obj)
-        this.add(tp, this.storage.user.tps)
-    }
-    td() {
-        let td = new Td(obj)
-        this.add(td, this.storage.user.tds)
-    }
-    
-}
-
-class remove {
-    constructor() {
-        this
-    }
-
-    tp() {
-        let location = this.storage.user.tps
-        let index = this.getObjIndex(obj, location)
-        this.remove(index, location)
-    }
-    td() {
-        let location = this.storage.user.tds
-        let index = this.getObjIndex(obj, location)
-        this.remove(index, location)
-    }
-}
+//     tp(obj) {
+//         let location = this.storage.user.tps
+//         let index = this.getObjIndex(obj, location)
+//         this.removeEl(index, location)
+//     }
+//     td(obj) {
+//         let location = this.storage.user.tds
+//         let index = this.getObjIndex(obj, location)
+//         this.removeEl(index, location)
+//     }
+// }
 
 const storageManager = new StorageManager()
 storageManager.createDefaults()
