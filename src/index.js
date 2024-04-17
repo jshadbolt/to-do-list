@@ -20,6 +20,12 @@ class StorageManager {
     log() {
         console.log(this.storage)
     }
+    logTps() {
+        console.log(this.storage.user.tps)
+    }
+    logTds() {
+        console.log(this.storage.user.tds)
+    }
 
 
     // obj methods
@@ -101,7 +107,7 @@ class StorageManager {
     }
     
 
-    // user methods
+    // action methods
     getEl(obj, location) {
         return this.getObjRef(obj, location)
     }
@@ -134,25 +140,25 @@ class StorageManager {
         return this.getObjProps(source, props)
     }
 
-    // user actions
-    addTp(obj) {
-        let tp = new Tp(obj)
-        this.addEl(tp, this.storage.user.tps)
-    }
-    addTd(obj) {
-        let td = new Td(obj)
-        this.addEl(td, this.storage.user.tds)
-    }
-    removeTp(obj) {
-        let location = this.storage.user.tps
-        let index = this.getObjIndex(obj, location)
-        this.removeEl(index, location)
-    }
-    removeTd(obj) {
-        let location = this.storage.user.tds
-        let index = this.getObjIndex(obj, location)
-        this.removeEl(index, location)
-    }
+    // // user actions
+    // addTp(obj) {
+    //     let tp = new Tp(obj)
+    //     this.addEl(tp, this.storage.user.tps)
+    // }
+    // addTd(obj) {
+    //     let td = new Td(obj)
+    //     this.addEl(td, this.storage.user.tds)
+    // }
+    // removeTp(obj) {
+    //     let location = this.storage.user.tps
+    //     let index = this.getObjIndex(obj, location)
+    //     this.removeEl(index, location)
+    // }
+    // removeTd(obj) {
+    //     let location = this.storage.user.tds
+    //     let index = this.getObjIndex(obj, location)
+    //     this.removeEl(index, location)
+    // }
 
     // default actions
     loadDefaults() {
@@ -166,12 +172,36 @@ class StorageManager {
         let td3 = {name: 'Meditate',  tp: 'Personal', description: 'Meditate daily, 5 minutes each'}
         const defaultTds = [new Td(td1), new Td(td2), new Td(td3)]
 
-        this.add(defaultTps, this.storage.default.tps)
-        this.add(defaultTds, this.storage.default.tds)
+        this.addEl(defaultTps, this.storage.default.tps)
+        this.addEl(defaultTds, this.storage.default.tds)
     }
-    userAddDefaults() {
+    addDefaultsToUser() {
         this.copyEl(this.storage.default.tps, this.storage.user.tps)
         this.copyEl(this.storage.default.tds, this.storage.user.tds)
+    }
+}
+
+class UserActions {
+    constructor(storageManager) {
+        this.storageManager = storageManager;
+    }
+
+    addTp(obj) {
+        let tp = new Tp(obj);
+        this.storageManager.addEl(tp, this.storageManager.storage.user.tps);
+    }
+
+    addTd(obj) {
+        let td = new Td(obj);
+        this.storageManager.addEl(td, this.storageManager.storage.user.tds);
+    }
+
+    removeTp(obj) {
+        this.storageManager.removeEl(obj, this.storageManager.storage.user.tps);
+    }
+
+    removeTd(obj) {
+        this.storageManager.removeEl(obj, this.storageManager.storage.user.tds);
     }
 }
 
@@ -208,5 +238,11 @@ class StorageManager {
 // }
 
 const storageManager = new StorageManager()
-storageManager.createDefaults()
-storageManager.userAddDefaults()
+const userActions = new UserActions(storageManager)
+storageManager.loadDefaults()
+storageManager.addDefaultsToUser()
+
+let myTodo = {name : 'Meeting', tp: 'Gym', description: 'workout log'}
+userActions.addTd(myTodo)
+storageManager.logTds()
+
