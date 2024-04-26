@@ -1,3 +1,27 @@
+function attachEl(source, target, position) {
+    switch (position) {
+        case 'before': {
+            target.parentNode.insertBefore(source, target);
+            break;
+        }
+        case 'after': {
+            if (target.nextSibling) {
+                target.parentNode.insertBefore(source, target.nextSibling);
+            } else {
+                target.parentNode.appendChild(source)
+            }
+            break; // Add this break statement
+        }
+        case 'append': {
+            target.appendChild(source)
+        }
+        break; // Add this break statement
+
+    }
+    // USAGE:
+    // attach(table, div, 'before');
+}
+
 function createEl(selector) {
     // Extracting element type
     const matches = selector.match(/^(\w+)/);
@@ -37,4 +61,14 @@ function createEl(selector) {
     return element;
 }
 
-export default createEl;
+function randomInt(min, max) {
+    const minCeiled = Math.ceil(min);
+    const maxFloored = Math.floor(max);
+    return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
+}
+
+export default {
+    attachEl,
+    createEl,
+    randomInt
+};

@@ -6,5 +6,41 @@
     <title>toDo</title>
 </head>
 <body>
+    <div id="app">
+        <dialog class="window" id="create-window">
+            <div class="create-panel" id="todo-panel">
+                <form id="form-todo">
+                    <label for="form-todo-title">Title</label>
+                    <input type="text" id="form-todo-title"></input>
+                    <label for="form-todo-description">Description</label>
+                    <input type="text" id="form-todo-description"></input>
+                    <div class="form-todo-priority-cont">
+                        <label for="priority">Priority</label>
+                        <input type="radio" name="priority" id="priority-low" value="low" class="priority-radio">
+                        <input type="radio" name="priority" id="priority-med" value="med" class="priority-radio">
+                        <input type="radio" name="priority" id="priority-high" value="high" class="priority-radio">
+                    </div>
+                    <button type="submit">Done</button>
+                </form>
+            </div>
+            <div class="create-panel" id="topic-panel">
+                <form id="form-topic">
+                    <label for="form-topic-name">Name</label>
+                    <input type="text" id="form-topic-name"></input>
+                    <div class="form-topic-fav-cont">
+                        <input type="checkbox" class="fav-toggle">
+                    </div>
+                </form>
+            </div>
+        </dialog>
+        <div class="popup-button-cont">
+            <button id="show-create-popup">Create</button>
+        </div>
+        <div id="view"></div>
+        <div class="todo-item-cont">
+            <div class="todo-item-title"></div>
+            <div class="todo-item-description"></div>
+        </div>
+    </div>
 </body>
 </html>
