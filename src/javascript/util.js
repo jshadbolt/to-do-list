@@ -67,7 +67,7 @@ function randomInt(min, max) {
     return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
 }
 
-export default {
+export {
     attachEl,
     createEl,
     randomInt

@@ -1,11 +1,4 @@
-import App from "./javascript/App"
-import globalStyle from "./global.css"
+import App from "./javascript/App";
 
-
-
-const root = document.querySelector('#app')
-const app = new App(root)
-
-
-
-
+localStorage.clear()
+let app = new App(document.querySelector('#app'))

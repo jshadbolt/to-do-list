@@ -1,32 +1,14 @@
-import { Todo, Topic } from "./ObjClass";
-import WriteAPI from "./WriteAPI";
-import View from "./View";
+import AppModel from "./AppModel";
+import AppView from "./AppView";
 
 export default class App {
     constructor(root) {
-        // this.root = root;
+        this.model = new AppModel();
+        this.view = new AppView(root);
 
-        this.todos = new WriteAPI('todos', Todo)
-        this.topics = new WriteAPI('topics,', Topic)
-        this.view = new View(root, this.handlers())
+        this.model.bindOnNotesChange((value) => this.view.updateNoteList(value))
+        // this.model.bindOnProjectsChange((value) => this.view.updateProjectList(value))
+        this.view.bindCreateNote((values) => this.model.createNote(values))
+        this.view.bindDeleteNote((id) => this.model.deleteNote(id))
     }
-
-
-
-    handlers() {
-
-        return {    
-            addTodo : todo =>  {
-                this.todos.save(todo)
-            },
-    
-            addTopic: topic =>  {
-                this.topics.save(topic)
-            },
-        }
-
-    }
-
-
 }
-
